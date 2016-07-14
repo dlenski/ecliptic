@@ -89,9 +89,7 @@ class GithubMatcher(URLHandler):
                 object=object[:8]
             elif object.isdigit():
                 object='#'+object
-            l = LinkHolder(self.text, "%s %s %s" % (project, type, object), type="Github "+type)
-            print l
-            return l
+            return LinkHolder(self.text, "%s %s %s" % (project, type, object), type="Github "+type)
 
 class BitbucketMatcher(URLHandler):
     scheme = ('http','https')
