@@ -70,6 +70,15 @@ class SMBPathMatcher(URLHandler):
         uncpath = '\\\\' + url.netloc + '\\'.join(path)
         return LinkHolder(uncpath, '<tt>%s</tt>'%uncpath, type="Windows UNC path")
 
+class WikipediaMatcher(URLHandler):
+    scheme = ('http','https')
+    netloc = staticmethod(lambda d: d.endswith(('.wikipedia.org','.wiktionary.org')))
+    def handle(self, url, path):
+        if len(path)>=3 and path[1]=='wiki':
+            name = '/'.join(path[2:]).replace('_',' ')
+            l = LinkHolder(self.text, name, type="%s article" % url.netloc.split('.')[-2])
+            return l
+
 class GithubMatcher(URLHandler):
     scheme = ('http','https')
     netloc = staticmethod(lambda d: d.startswith('github.') or d=='github.com')
@@ -108,7 +117,7 @@ class ImageMatcher(URLHandler):
         if ext in ('JPG','JPEG','PNG'):
             return ImageHolder(self.text, fn, type="%s image" % ext)
 
-clip_handlers = [ GithubMatcher, BitbucketMatcher, SMBPathMatcher, JIRAMatcher, ImageMatcher ]
+clip_handlers = [ WikipediaMatcher, GithubMatcher, BitbucketMatcher, SMBPathMatcher, JIRAMatcher, ImageMatcher ]
 
 ########################################
             
