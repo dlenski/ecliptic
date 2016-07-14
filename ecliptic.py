@@ -99,6 +99,8 @@ class BitbucketMatcher(URLHandler):
             return LinkHolder(self.text, "%s commit %s" % (path[2], path[4][:8]), type="Bitbucket commit")
         elif len(path)>=5 and path[3]=='branch':
             return LinkHolder(self.text, "%s branch %s" % (path[2], '/'.join(path[4:])), type="Bitbucket branch")
+        elif len(path)>=5 and path[3]=='pull-requests':
+            return LinkHolder(self.text, "%s pull-request #%s" % (path[2], path[4]), type="Bitbucket pull-request")
 
 class JIRAMatcher(URLHandler):
     scheme = ('http','https')
