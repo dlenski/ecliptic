@@ -108,6 +108,8 @@ class JIRAMatcher(URLHandler):
     def handle(self, url, path):
         if len(path)>=3 and path[1]=='browse':
             return LinkHolder(self.text, path[2], type="JIRA task")
+        elif len(path)>=4 and path[1]=='projects' and path[3]=='issues':
+            return LinkHolder(self.text, path[3], type="JIRA task")
 
 class ImageMatcher(URLHandler):
     scheme = ('http','https')
